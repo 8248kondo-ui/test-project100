@@ -48,25 +48,27 @@
         displayTodos();
     }
 
-    function displayTodos() {
-        const list = document.getElementById('todoList');
-        const todos = JSON.parse(localStorage.getItem('myTodos')) || [];
-        list.innerHTML = "";
-        
-        todos.forEach((todo, index) => {
-            // データの形式をチェック（古い文字列データへの対策）
-            const text = typeof todo === 'string' ? todo : todo.text;
-            const isCompleted = todo.completed || false;
+   function displayTodos() {
+    const list = document.getElementById('todoList');
+    const todos = JSON.parse(localStorage.getItem('myTodos')) || [];
+    list.innerHTML = "";
+    
+    todos.forEach((todo, index) => {
+        // データの形式をチェック（古い文字列データへの対策）
+        const text = typeof todo === 'string' ? todo : todo.text;
+        const isCompleted = todo.completed || false;
 
-            const li = document.createElement('li');
-            li.innerHTML = `
-    <input type="checkbox" onclick="toggleTodo(${index})">
-    <span class="todo-text">${task}</span>
-    <button class="delete-btn" onclick="deleteTodo(${index})">削除</button>
-`;
-            list.appendChild(li);
-        });
-    }
+        const li = document.createElement('li');
+        // 修正ポイント：${task} を ${text} に変更。
+        // さらに、完了状態に応じて checked と class を付与。
+        li.innerHTML = `
+            <input type="checkbox" ${isCompleted ? 'checked' : ''} onclick="toggleTodo(${index})">
+            <span class="todo-text ${isCompleted ? 'completed' : ''}">${text}</span>
+            <button class="delete-btn" onclick="deleteTodo(${index})">削除</button>
+        `;
+        list.appendChild(li);
+    });
+}
 
     // 追加：完了・未完了を切り替える関数
     function toggleTodo(index) {
