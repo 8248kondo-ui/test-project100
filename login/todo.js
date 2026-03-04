@@ -1,54 +1,47 @@
-// 画面読み込み時に保存されたTODOを表示
+// 1. 画面表示時に保存データを読み込む
 window.onload = function() {
     displayTodos();
 };
 
-// TODOを追加する関数
+// 2. TODOを追加する
 function addTodo() {
     const input = document.getElementById('todoInput');
     const task = input.value.trim();
+    if (!task) return;
 
-    if (task === "") return; // 空入力は無視
-
-    // ローカルストレージから既存のリストを取得（なければ空配列）
     const todos = JSON.parse(localStorage.getItem('myTodos')) || [];
-    
-    // 新しいタスクを追加
     todos.push(task);
-    
-    // ローカルストレージに保存
     localStorage.setItem('myTodos', JSON.stringify(todos));
     
-    input.value = ""; // 入力欄をクリア
-    displayTodos();   // リストを再描画
+    input.value = "";
+    displayTodos();
 }
 
-// TODOを表示する関数
+// 3. TODOを表示する
 function displayTodos() {
-    const listElement = document.getElementById('todoList');
+    const list = document.getElementById('todoList');
     const todos = JSON.parse(localStorage.getItem('myTodos')) || [];
     
-    // リストを一度空にする
-    listElement.innerHTML = "";
-
+    list.innerHTML = "";
     todos.forEach((task, index) => {
         const li = document.createElement('li');
         li.innerHTML = `
             ${task}
             <button class="delete-btn" onclick="deleteTodo(${index})">削除</button>
         `;
-        listElement.appendChild(li);
+        list.appendChild(li);
     });
 }
 
-// TODOを削除する関数
+// 4. TODOを削除する
 function deleteTodo(index) {
     const todos = JSON.parse(localStorage.getItem('myTodos')) || [];
-    todos.splice(index, 1); // 指定した要素を削除
+    todos.splice(index, 1);
     localStorage.setItem('myTodos', JSON.stringify(todos));
     displayTodos();
 }
 
+// 5. ログアウト
 function logout() {
-    location.href = "login.html"; // ログイン画面へ戻る
+    window.location.href = "login.html";
 }
