@@ -60,14 +60,10 @@
 
             const li = document.createElement('li');
             li.innerHTML = `
-                <div class="todo-item">
-                    <input type="checkbox" ${isCompleted ? 'checked' : ''} onclick="toggleTodo(${index})">
-                    <span class="todo-text ${isCompleted ? 'completed' : ''}" onclick="toggleTodo(${index})">
-                        ${text}
-                    </span>
-                </div>
-                <button class="delete-btn" onclick="deleteTodo(${index})">削除</button>
-            `;
+    <input type="checkbox" onclick="toggleTodo(${index})">
+    <span class="todo-text">${task}</span>
+    <button class="delete-btn" onclick="deleteTodo(${index})">削除</button>
+`;
             list.appendChild(li);
         });
     }
