@@ -1,21 +1,19 @@
 document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // フォームの標準送信をキャンセル
+    event.preventDefault();
 
     const user = document.getElementById('username').value;
     const pass = document.getElementById('password').value;
     const message = document.getElementById('message');
 
-    // デモ用の判定ロジック
+    message.textContent = ""; // メッセージの初期化
+
+    // デモ用ログイン判定
     if (user === "admin" && pass === "password123") {
-    alert("今から dashboard.html へジャンプします！");
-    console.log("移動先パス: " + window.location.origin + window.location.pathname.replace('login.html', 'dashboard.html'));
-    window.location.assign("dashboard.html"); // href の代わりに assign を使ってみる
-}
-    // if (user === "admin" && pass === "password123") {
-    //     alert("ログイン成功！管理画面へ移動します。");
-    //     // ここが重要：コメントアウトを外して有効化しました
-    //     window.location.href = "./dashboard.html"; 
-    // } else {
-    //     message.textContent = "ユーザー名またはパスワードが正しくありません。";
-    // }
+        alert("ログイン成功！");
+        // 履歴を上書きして遷移（戻るボタンで戻らせない場合はreplace）
+        window.location.assign("dashboard.html"); 
+    } else {
+        message.textContent = "ユーザー名またはパスワードが正しくありません。";
+        document.getElementById('password').value = ""; // パスワードのみクリア
+    }
 });
